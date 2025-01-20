@@ -79,8 +79,11 @@ export default function RegisterPage() {
                 </p>
                 <button className="flex gap-4  justify-center">
                     <Image src={'/free-google.png'} alt={""} width={30} height={30} />
-                    Login with Google
+                    Register with Google
                 </button>
+                <div className="text-center my-4 text-gray-500 border-t pt-4">
+                    Existing account? <Link className="underline" href={'/login'}>Login here &raquo; </Link>
+                </div>
             </form>
         </section>
     )

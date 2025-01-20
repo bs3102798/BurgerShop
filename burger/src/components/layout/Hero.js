@@ -17,12 +17,12 @@ export default function Hero() {
                         Go to a shop that make you a burger to die for.
                     </p>
                     <div className="flex gap-4 text-sm">
-                        <button className=" bg-primary uppercase flex items-center gap-2 text-white
+                        <button className=" flex justify-center bg-primary uppercase flex items-center gap-2 text-white
                         px-4 py-2 rounded-full ">
                             Order now
                             <RightArrow />
                         </button>
-                        <button className="flex gap-2 py-2 text-gray-700 font-semibold">
+                        <button className="flex items-center border-0 gap-2 py-2 text-gray-700 font-semibold">
                             Learn more
                             <RightArrow />
                         </button>
