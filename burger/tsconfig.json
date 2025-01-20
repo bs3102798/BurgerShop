@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -24,9 +27,7 @@
     ]
     
   },
-  "paths": {
-    "@/*": ["src/*"]
-  },
+ 
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
