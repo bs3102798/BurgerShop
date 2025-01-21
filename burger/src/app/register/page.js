@@ -77,7 +77,8 @@ export default function RegisterPage() {
                 <p className="text-center my-4 text-grey-400">
                     or Login with provider
                 </p>
-                <button className="flex gap-4  justify-center">
+                <button onClick={()=> signIn('google', {callbackUrl:'/'})} 
+                 className="flex gap-4  justify-center">
                     <Image src={'/free-google.png'} alt={""} width={30} height={30} />
                     Register with Google
                 </button>
