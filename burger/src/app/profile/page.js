@@ -1,17 +1,20 @@
 'use client'
+import SuccessBox from "/src/components/layout/SuccessBox";
+//burger/src/components/layout/InfoBox.js
+import InfoBox from "/src/components/layout/InfoBox";
 import { useSession } from "next-auth/react"
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ProfilePage() {
     const session = useSession();
     const [userName, setUserName] = useState("");
     const [image, setImage] = useState('');
-    const [saved, setSaved] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
+
     const { status } = session
-    
+
     console.log(session)
 
     console.log({ image })
@@ -26,36 +29,60 @@ export default function ProfilePage() {
     console.log('Image state:', image);
     async function handleProfileInfoUpdate(ev) {
         ev.preventDefault();
-        setSaved(false)
-        setIsSaving(true)
-        const response = await fetch("/api/profile", {
-            method: "PUT",
-            headers: { "Content-type": 'application/json' },
-            body: JSON.stringify({ name: userName, image }),
+
+        //toast("Saving....")
+        const savingPromise = new Promise(async (resolve, reject) => {
+
+
+            const response = await fetch("/api/profile", {
+                method: "PUT",
+                headers: { "Content-type": 'application/json' },
+                body: JSON.stringify({ name: userName, image }),
+            })
+            if (response.ok)
+                resolve()
+            else
+                reject();
+        });
+        await toast.promise(savingPromise, {
+            loading: 'Saving...',
+            success: "Profile saved!",
+            error: "Error",
         })
-        setIsSaving(false)
-        if (response.ok) {
-            setSaved(true)
+
+        // if (response.ok) {
+        //     toast.success("Profile saved!!")
 
 
-        }
+        // }
 
     }
-    async function handleFileChange(ev) {       
+    async function handleFileChange(ev) {
         const files = ev.target.files;
-
         if (files?.length === 1) {
             const data = new FormData;
             data.set('file', files[0])
-            const response = await fetch('/api/upload', {
-                method: "POST",
-                body: data,
-                
+            const uploadPromise = new Promise(async (resolve, reject) => {
+                const response = await fetch('/api/upload', {
+                    method: "POST",
+                    body: data,
+                });
+                if (response.ok) {
+                    const link = await response.json();
+                    //console.log(link);
+                    setImage(link);
+                    resolve();
+                } else {
+                    reject();
+                }
             })
-            const link = await response.json();
-            console.log(link)
-            setImage(link)
-           
+            await toast.promise(uploadPromise, {
+                loading: "Uploading",
+                success: "Upload Complete",
+                error: "Upload Error",
+            })
+
+
         }
 
     }
@@ -65,7 +92,7 @@ export default function ProfilePage() {
     if (status === "unauthenticated") {
         return redirect('/login')
     }
-    
+
     return (
         <>
             <section className="mt-8">
@@ -73,27 +100,16 @@ export default function ProfilePage() {
                     Profile
                 </h1>
                 <div className="max-w-md mx-auto ">
-                    {saved && (
 
-                        <h2 className="text-center bg-green-100 p-4 rounded-lg border border-green-300">
-                            Profile saved!
-                        </h2>
-                    )}
-                    {isSaving && (
-                        <h2 className="text-center bg-bule-100 p-4 rounded-lg border border-blue-300">
-                            Saving....
-                        </h2>
-
-                    )}
                     <div className="flex gap-4 items-center" >
                         <div>
                             <div className=" p-2 rounded-lg relative max-w-{120px} ">
-                           
+
 
                                 {image && (
                                     <Image
                                         className="rounded-lg w-full h-full max-w-[120px]"
-                                        src={image}  
+                                        src={image}
                                         width={250}
                                         height={250}
                                         alt="avatar"
@@ -110,7 +126,7 @@ export default function ProfilePage() {
                                 </label>
 
 
-                                
+
                             </div>
 
                         </div>
