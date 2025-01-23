@@ -8,6 +8,11 @@ const UserSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String },
     image: {type: String},
+    city:{type:String},
+    phone:{type:String},
+    country:{type:String}, 
+    streetAddress:{type:String},
+    postalCode:{type:String},
    
 }, { timestamps: true });
 

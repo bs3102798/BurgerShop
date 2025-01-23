@@ -11,33 +11,60 @@ import toast from "react-hot-toast";
 export default function ProfilePage() {
     const session = useSession();
     const [userName, setUserName] = useState("");
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState("")
+    const [phone, setPhone] = useState('');
+    const [streetAddress, setStreetAddress] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
 
     const { status } = session
 
     console.log(session)
 
-    console.log({ image })
+
 
     useEffect(() => {
         if (status === 'authenticated') {
-            setUserName(session.data.user.name)
-            setImage(session?.data?.user?.image)
+
+            setUserName(session.data.user.name);
+            setImage(session?.data?.user?.image);
+            fetch('/api/profile').then(response => {
+                response.json().then(data => {
+                    // console.log(data)
+                    setPhone(data.phone);
+                    setStreetAddress(data.streetAddress);
+                    setPostalCode(data.postalCode);
+                    setCity(data.city);
+                    setCountry(data.country);
+
+
+                })
+            });
+
         }
     }, [session, status]);
 
-    console.log('Image state:', image);
+
     async function handleProfileInfoUpdate(ev) {
         ev.preventDefault();
 
-        //toast("Saving....")
+
         const savingPromise = new Promise(async (resolve, reject) => {
 
 
             const response = await fetch("/api/profile", {
                 method: "PUT",
                 headers: { "Content-type": 'application/json' },
-                body: JSON.stringify({ name: userName, image }),
+                body: JSON.stringify({
+                    name: userName,
+                    image,
+                    streetAddress,
+                    phone,
+                    postalCode,
+                    city,
+                    country
+                }),
             })
             if (response.ok)
                 resolve()
@@ -50,11 +77,6 @@ export default function ProfilePage() {
             error: "Error",
         })
 
-        // if (response.ok) {
-        //     toast.success("Profile saved!!")
-
-
-        // }
 
     }
     async function handleFileChange(ev) {
@@ -101,7 +123,7 @@ export default function ProfilePage() {
                 </h1>
                 <div className="max-w-md mx-auto ">
 
-                    <div className="flex gap-4 items-center" >
+                    <div className="flex gap-4" >
                         <div>
                             <div className=" p-2 rounded-lg relative max-w-{120px} ">
 
@@ -131,12 +153,70 @@ export default function ProfilePage() {
 
                         </div>
                         <form className="grow" onSubmit={handleProfileInfoUpdate}>
+                            <label>
+                                First and last name
+                            </label>
                             <input type="text" placeholder={"First and last name"}
                                 value={
                                     userName
                                     //session.data.user.name
                                 } onChange={ev => setUserName(ev.target.value)} />
-                            <input type="email" disabled={true} value={session.data.user.email} />
+                            <label>
+                                email
+                            </label>
+                            <input type="email" placeholder="Email" disabled={true} value={session.data.user.email} />
+                            <label>
+                                Phone
+                            </label>
+                            <input
+                                value={phone}
+                                onChange={ev => setPhone(ev.target.value)}
+                                type="tel"
+                                placeholder="Phone Number"
+                            />
+                            <label>
+                                street address
+                            </label>
+                            <input
+                                type="text"
+                                value={streetAddress}
+                                onChange={ev => setStreetAddress(ev.target.value)}
+                                placeholder="street address"
+                            />
+                            <div className="flex gap-2">
+                                
+                                <div>
+
+
+                                    <label>Postal code</label>
+                                    <input
+
+                                        type="text"
+                                        value={postalCode}
+                                        onChange={ev => setPostalCode(ev.target.value)}
+                                        placeholder="Postal code"
+                                    />
+
+                                </div>
+                                <div>
+                                    <label>city</label>
+                                    <input
+
+                                        type="text"
+                                        value={city}
+                                        onChange={ev => setCity(ev.target.value)}
+                                        placeholder="City"
+                                    />
+
+                                </div>
+                            </div>
+                            <label>Country</label>
+                            <input
+                                type="text"
+                                value={country}
+                                onChange={ev => setCountry(ev.target.value)}
+                                placeholder="Country"
+                            />
                             <button type="submit">Save</button>
 
                         </form>
