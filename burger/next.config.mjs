@@ -8,7 +8,11 @@ const nextConfig = {
                 // port: '',
                 // pathname: '/account123/**',
             },
-            
+            {
+                protocol: 'https',
+                hostname:'burger-shop.s3.amazonaws.com',
+
+            },
         ]
     }
 };
