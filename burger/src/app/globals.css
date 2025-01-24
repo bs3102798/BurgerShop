@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-section.hero{
+section.hero {
   @apply grid;
   grid-template-columns: .4fr .6fr;
 }
@@ -17,6 +17,7 @@ input[type="text"] {
   @apply block border p-2 border-gray-400 bg-gray-200;
 
 }
+
 input[type="email"]:disabled,
 input[type="password"]:disabled,
 input[type="tel"]:disabled,
@@ -24,29 +25,36 @@ input[type="text"]:disabled {
   @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500
 }
 
-label{
+label {
   @apply text-gray-500 text-sm leading-tight;
 }
 
-label + input{
+label+input {
   margin-top: -3px;
 }
 
-button{
+button {
   @apply block w-full text-gray-300 font-semibold;
   @apply border border-gray-500 rounded-xl;
 }
-button[type='submit'], .submit{
-  @apply border-0 bg-primary text-white
 
+button[type='submit'],
+.submit {
+  @apply border-0 bg-primary text-white
 }
 
-button[type='submit'], .submit{
+button[type='submit'], .submit {
   @apply border-0 bg-primary text-white
+}
 
-}button[type='submit']:disabled, .submit{
+button[type='submit']:disabled, .submit {
   @apply cursor-not-allowed bg-gray-300
-
 }
 
+div.tabs>* {
+  @apply bg-gray-300 text-gray-600 rounded-full py-2 px-4;
+}
 
+div.tabs>*.active {
+  @apply bg-primary text-white
+}

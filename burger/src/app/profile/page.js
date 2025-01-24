@@ -1,12 +1,14 @@
 'use client'
-import SuccessBox from "/src/components/layout/SuccessBox";
-//burger/src/components/layout/InfoBox.js
-import InfoBox from "/src/components/layout/InfoBox";
 import { useSession } from "next-auth/react"
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Link from "next/link";
+//import UserTabs from "@/appcomponents/layout/UserTabs";
+import UserTabs from "/src/components/layout/UserTabs";
+
+//burger/src/components/layout/UserTabs.js
 
 export default function ProfilePage() {
     const session = useSession();
@@ -17,12 +19,13 @@ export default function ProfilePage() {
     const [postalCode, setPostalCode] = useState('');
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [profileFetch, setProfileFetched] = useState(false)
 
     const { status } = session
 
     console.log(session)
-
-
+    console.log("isAdmin in UserTabs:", isAdmin);
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -37,6 +40,8 @@ export default function ProfilePage() {
                     setPostalCode(data.postalCode);
                     setCity(data.city);
                     setCountry(data.country);
+                    setIsAdmin(data.admin)
+                    setProfileFetched(true);
 
 
                 })
@@ -108,7 +113,7 @@ export default function ProfilePage() {
         }
 
     }
-    if (status === 'loading') {
+    if (status === 'loading' || !profileFetch) {
         return 'Loading...'
     }
     if (status === "unauthenticated") {
@@ -118,10 +123,10 @@ export default function ProfilePage() {
     return (
         <>
             <section className="mt-8">
-                <h1 className="text-center text-primary text-4xl">
-                    Profile
-                </h1>
-                <div className="max-w-md mx-auto ">
+              
+                  <UserTabs isAdmin={isAdmin} />
+                
+                <div className="max-w-md mx-auto mt-8 ">
 
                     <div className="flex gap-4" >
                         <div>

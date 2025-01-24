@@ -13,6 +13,7 @@ const UserSchema = new Schema({
     country:{type:String}, 
     streetAddress:{type:String},
     postalCode:{type:String},
+    admin: {type: Boolean, default: false}
    
 }, { timestamps: true });
 
