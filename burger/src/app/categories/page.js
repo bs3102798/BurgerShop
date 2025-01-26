@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import UserTabs from "/src/components/layout/UserTabs";
 import { useProfilePage } from "/src/components/UseProfile";
 import toast from "react-hot-toast";
-// import { resolve } from "path";
-// import { error } from "console";
+
 
 export default function CategoriesPage() {
     const [CategoryName, setCategoryName] = useState('');
@@ -26,6 +25,7 @@ export default function CategoriesPage() {
             })
         })
     }
+
     async function handleCategorySubmit(ev) {
         ev.preventDefault()
         const creationPromise = new Promise(async (resolve, reject) => {
@@ -48,10 +48,32 @@ export default function CategoriesPage() {
         })
         await toast.promise(creationPromise, {
             loading: editedCategroy ? "Udating category" : "Creating new category",
-            success: editedCategroy ? "Udated category" :'category created',
+            success: editedCategroy ? "Udated category" : 'category created',
             error: 'error'
 
         })
+    }
+
+    async function handleDeleteClick(_id) {
+        const promise = new Promise(async (resolve, reject) => {
+
+            const response = await fetch('/api/categories?_id=' + _id, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                resolve()
+            }
+            else {
+                reject
+            }
+        })
+
+        await toast.promise(promise, {
+            loading: 'Deleting....',
+            success: 'Deleted',
+            error: "error",
+        });
+        fetchCategories();
     }
 
     if (profileLoading) {
@@ -89,26 +111,34 @@ export default function CategoriesPage() {
                     </div>
                 </form>
                 <div>
-                    <h2 className="mt-5 text-sm text-gray-500">Edit category:</h2>
+                    <h2 className="mt-5 text-sm text-gray-500">Catagories:</h2>
                     {categories?.length > 0 && categories.map(c => (
-                        <button
-                            onClick={() => {
-                                setEditedCategory(c);
-                                setCategoryName(c.name);
-                            }
-                            }
+                        <div
                             key={c.name}
-                            className="rounded-lg p-2 px-4 flex gap-1 mb-2 cursor-pointer" >
-
-                            <span className="">{c.name}</span>
-
-                        </button>
+                            className="bg-gray-100 rounded-lg p-2 px-4 flex gap-1 mb-2 
+                            cursor-pointer items-center" >
+                            <div
+                                className="grow curser-pointer"
+                            >{c.name}</div>
+                            <div className="flex gap-1">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setEditedCategory(c);
+                                        setCategoryName(c.name);
+                                    }}>
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDeleteClick(c._id)}>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
                     ))}
                 </div>
-
-
             </section>
-
         </>
     )
 }
