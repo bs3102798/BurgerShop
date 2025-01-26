@@ -1,19 +1,29 @@
- import { useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 
 import EditableImage from "/src/components/layout/EditableImage";
+import MenuItemPriceProps from "./MenuItemPriceProps";
+// import Trash from "/src/components/icons/Trash.js";
+// import Plus from "/src/components/icons/Plus.js";
 
 
-export default function MenuItemForm({onSubmit, menuItem}) {
+export default function MenuItemForm({ onSubmit, menuItem }) {
     const [image, setImage] = useState(menuItem?.image || '');
-
     const [name, setName] = useState(menuItem?.name || '');
     const [description, setDescription] = useState(menuItem?.description || '');
     const [basePrice, setBasePrice] = useState(menuItem?.basePrice || '');
-    return(
-       
+    const [sizes, setSizes] = useState(menuItem?.sizes || [])
+    const [extraTopPrices, setExtraTopPrices] = useState(menuItem?.extraTopPrices || [])
+
+
+    return (
+
         <form
-         onSubmit={ev => onSubmit(ev, {image, name, description, basePrice})} 
-         className="mt-8 max-w-md mx-auto">
+            onSubmit={ev => onSubmit(ev, {
+                image, name, description, basePrice,
+                sizes, extraTopPrices
+            })}
+            className="mt-8 max-w-md mx-auto">
             <div className="grid items-start gap-4 " style={{ gridTemplateColumns: '.3fr .7fr' }}>
                 <div className="">
                     <EditableImage link={image} setLink={setImage} />
@@ -39,6 +49,18 @@ export default function MenuItemForm({onSubmit, menuItem}) {
                         value={basePrice}
                         onChange={ev => setBasePrice(ev.target.value)}
                     />
+
+                    <MenuItemPriceProps
+                        name={'Sizes'}
+                        addLabel={'Add size'}
+                        props={sizes}
+                        setProps={setSizes} />
+                    <MenuItemPriceProps
+                        name={'Extra toppings'}
+                        addLabel={'Add topping prices'}
+                        props={extraTopPrices}
+                        setProps={setExtraTopPrices}
+                    />
                     <button type="submit">save</button>
                 </div>
 
@@ -46,6 +68,6 @@ export default function MenuItemForm({onSubmit, menuItem}) {
             </div>
 
         </form>
-        
+
     )
 }
