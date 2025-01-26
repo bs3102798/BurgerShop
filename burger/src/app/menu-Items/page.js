@@ -1,44 +1,29 @@
+/* eslint-disable react/jsx-key */
 "use client"
-import EditableImage from "/src/components/layout/EditableImage";
+
+import Link from "next/link";
+//import UserTabs from "@/appcomponents/layout/UserTabs";
 import { useProfilePage } from "/src/components/UseProfile";
 import UserTabs from "/src/components/layout/UserTabs";
-import { useState } from "react";
-import toast from "react-hot-toast";
+//import RightArrow from "@/appcomponents/icons/Rightarrow";
+import RightArrow from "/src/components/icons/Rightarrow.js"
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function MenuItemsPage() {
-    const [image, setImage] = useState("");
-    const { loading, data } = useProfilePage();
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [basePrice, setBasePrice] = useState('');
-    async function handleFormSubmit(ev) {
-        ev.preventDefault();
-        const data = {
-            image,
-            name,
-            description,
-            basePrice,
-        }
-        const savingPromise = new Promise(async (resolve, reject) => {
+    const { loading, data } = useProfilePage([]);
+    const [menuItems, setMenuItems] = useState('')
 
-            const response = await fetch('/api/menu-items', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: { "Content-Type": "application/json" },
+    useEffect(() => {
+        fetch('/api/menu-items').then(res => {
+            res.json().then(menuItems => {
+                setMenuItems(menuItems);
             })
-            if (response.ok)
-                resolve()
-            else
-                reject()
-        })
-        await toast.promise(savingPromise, {
-            loading: 'Saving menu item',
-            success:"Item saved",
-            error: 'error',
         })
 
+    }, [])
 
-    }
+
     if (loading) {
         return 'Loading user info...';
     }
@@ -47,42 +32,41 @@ export default function MenuItemsPage() {
     }
     return (
         <>
-            <section className="mt-8">
+            <section className="mt-8 max-w-md mx-auto">
                 <UserTabs isAdmin={true} />
-                <form onSubmit={handleFormSubmit} className="mt-8 max-w-md mx-auto">
-                    <div className="grid items-start gap-4 " style={{ gridTemplateColumns: '.3fr .7fr' }}>
-                        <div className="">
-                            <EditableImage link={image} setLink={setImage} />
-                        </div>
-                        <div className="grow">
-                            <label>Menu item name</label>
-                            <input
-                                value={name}
-                                onChange={ev => setName(ev.target.value)}
-                                type="text"
-                            />
-                            <label>Description</label>
-                            <input
+                <div className="mt-8">
+                    <Link
+                        className="button "
+                        href={"/menu-Items/new"}>
+                        Create new menu item
+                        <RightArrow />
+                    </Link>
+                </div>
+                <div>
+                    <h2 className="text-sm text-gray-500 mt-8">Edit menu item</h2>
+                    <div className="grid grid-cols-4 gap-2">
 
-                                value={description}
-                                onChange={ev => setDescription(ev.target.value)}
-                                type="text" />
-                            <label
+                        {menuItems?.length > 0 && menuItems.map(item => (
+                            <Link href={'/menu-Items/edit/' + item._id} 
+                            className="bg-gray-300 rounded-lg p-4">
+                                <div className="relative ">
+                                    <Image className="rounded-md"
+                                     src={item.image} alt={''} width={100} height={100} />
 
+                                </div>
+                                <div className="text-center">
+                                {item.name}
 
-                            >Base price</label>
-                            <input type="text"
-                                value={basePrice}
-                                onChange={ev => setBasePrice(ev.target.value)}
-                            />
-                            <button type="submit">save</button>
-                        </div>
-
-
+                                </div>
+                            </Link>
+                        ))}
                     </div>
+                </div>
 
-                </form>
             </section>
+
+
         </>
     )
+
 }

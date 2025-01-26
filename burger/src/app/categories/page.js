@@ -98,7 +98,7 @@ export default function CategoriesPage() {
                             }
                             }
                             key={c.name}
-                            className="bg-gray-200 rounded-lg p-2 px-4 flex gap-1 mb-2 cursor-pointer" >
+                            className="rounded-lg p-2 px-4 flex gap-1 mb-2 cursor-pointer" >
 
                             <span className="">{c.name}</span>
 

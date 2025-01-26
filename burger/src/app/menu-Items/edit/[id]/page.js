@@ -1,24 +1,37 @@
 'use client'
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useProfilePage } from "/src/components/UseProfile";
 import EditableImage from "/src/components/layout/EditableImage";
-//import { useProfilePage } from "/src/components/UseProfile";
-import UserTabs from "/src/components/layout/UserTabs";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import RightArrow from "/src/components/icons/Rightarrow.js"
-import LeftArrow from "/src/components/icons/Left.js";
-import { redirect } from "next/navigation";
-//import { redirect } from "next/dist/server/api-utils";
-export default function NewMenuItemPage() {
 
-    //
+import UserTabs from "/src/components/layout/UserTabs";
+
+import toast from "react-hot-toast";
+import LeftArrow from "/src/components/icons/Left.js";
+import { redirect, useParams } from "next/navigation";
+//import Parames from ""
+
+export default function EditMenuItemPage() {
+    const {id} = useParams()
     const [image, setImage] = useState("");
     const { loading, data } = useProfilePage();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [basePrice, setBasePrice] = useState('');
     const [redirectItem, setRedirectItem] = useState(false);
+    useEffect(() =>{
+        fetch('/api/menu-items').then(res => {
+            
+            res.json().then(items => {
+                const item = items.find(i => i._id === id )
+               setImage(item.image);
+               setName(item.name);
+               setDescription(item.description);
+               setBasePrice(item.basePrice);
+
+            })
+        })
+    },[])
     async function handleFormSubmit(ev) {
         ev.preventDefault();
         const data = {
@@ -26,11 +39,12 @@ export default function NewMenuItemPage() {
             name,
             description,
             basePrice,
+            _id:id
         }
         const savingPromise = new Promise(async (resolve, reject) => {
 
             const response = await fetch('/api/menu-items', {
-                method: 'POST',
+                method: 'PUT',
                 body: JSON.stringify(data),
                 headers: { "Content-Type": "application/json" },
             })
@@ -44,11 +58,11 @@ export default function NewMenuItemPage() {
             success: "Item saved",
             error: 'error',
         })
-       //return redirect('/menu-Items');
-       setRedirectItem(true)
+        //return redirect('/menu-Items');
+        setRedirectItem(true)
 
     }
-    if(redirectItem) {
+    if (redirectItem) {
         return redirect('/menu-Items')
     }
     if (loading) {
@@ -64,9 +78,9 @@ export default function NewMenuItemPage() {
             <UserTabs isAdmin={true} />
             <div className="max-w-md mx-auto mt-8">
                 <Link href={"/menu-Items"} className="button">
-                <LeftArrow />
-                <span>Show all menu items</span>
-                
+                    <LeftArrow />
+                    <span>Show all menu items</span>
+
                 </Link>
             </div>
             <form onSubmit={handleFormSubmit} className="mt-8 max-w-md mx-auto">
@@ -105,4 +119,5 @@ export default function NewMenuItemPage() {
         </section>
 
     )
+
 }
