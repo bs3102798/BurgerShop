@@ -86,7 +86,7 @@ export default function CategoriesPage() {
 
     return (
         <>
-            <section className="mt-8 max-w-lg mx-auto">
+            <section className="mt-8 max-w-xl mx-auto">
                 <UserTabs isAdmin={true} />
                 <form className="mt-8" onSubmit={handleCategorySubmit}>
                     <div className="flex gap-2 items-end">

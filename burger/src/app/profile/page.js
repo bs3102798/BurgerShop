@@ -1,27 +1,29 @@
 'use client'
 import { useSession } from "next-auth/react"
-import Image from "next/image";
+//import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import Link from "next/link";
+//import Link from "next/link";
 //import UserTabs from "@/appcomponents/layout/UserTabs";
 import UserTabs from "/src/components/layout/UserTabs";
-import EditableImage from "/src/components/layout/EditableImage";
+import UserForm from "/src/components/layout/UserForm";
+// import EditableImage from "/src/components/layout/EditableImage";
 
 //burger/src/components/layout/UserTabs.js
 
 export default function ProfilePage() {
     const session = useSession();
-    const [userName, setUserName] = useState("");
-    const [image, setImage] = useState("")
-    const [phone, setPhone] = useState('');
-    const [streetAddress, setStreetAddress] = useState('');
-    const [postalCode, setPostalCode] = useState('');
-    const [city, setCity] = useState('');
-    const [country, setCountry] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false)
+    // const [userName, setUserName] = useState("");
+    // const [image, setImage] = useState("")
+    // const [phone, setPhone] = useState('');
+    // const [streetAddress, setStreetAddress] = useState('');
+    // const [postalCode, setPostalCode] = useState('');
+    // const [city, setCity] = useState('');
+    // const [country, setCountry] = useState('');
+     const [isAdmin, setIsAdmin] = useState(false)
     const [profileFetch, setProfileFetched] = useState(false)
+    const [user, setUser] = useState(null)
 
     const { status } = session
 
@@ -31,16 +33,17 @@ export default function ProfilePage() {
     useEffect(() => {
         if (status === 'authenticated') {
 
-            setUserName(session.data.user.name);
-            setImage(session?.data?.user?.image);
+            // setUserName(session.data.user.name);
+            // setImage(session?.data?.user?.image);
             fetch('/api/profile').then(response => {
                 response.json().then(data => {
                     // console.log(data)
-                    setPhone(data.phone);
-                    setStreetAddress(data.streetAddress);
-                    setPostalCode(data.postalCode);
-                    setCity(data.city);
-                    setCountry(data.country);
+                    // setPhone(data.phone);
+                    // setStreetAddress(data.streetAddress);
+                    // setPostalCode(data.postalCode);
+                    // setCity(data.city);
+                    // setCountry(data.country);
+                    setUser(data)
                     setIsAdmin(data.admin)
                     setProfileFetched(true);
 
@@ -52,7 +55,7 @@ export default function ProfilePage() {
     }, [session, status]);
 
 
-    async function handleProfileInfoUpdate(ev) {
+    async function handleProfileInfoUpdate(ev,data) {
         ev.preventDefault();
 
 
@@ -62,15 +65,7 @@ export default function ProfilePage() {
             const response = await fetch("/api/profile", {
                 method: "PUT",
                 headers: { "Content-type": 'application/json' },
-                body: JSON.stringify({
-                    name: userName,
-                    image,
-                    streetAddress,
-                    phone,
-                    postalCode,
-                    city,
-                    country
-                }),
+                body: JSON.stringify(data),
             })
             if (response.ok)
                 resolve()
@@ -99,9 +94,10 @@ export default function ProfilePage() {
               
                   <UserTabs isAdmin={isAdmin} />
                 
-                <div className="max-w-md mx-auto mt-8 ">
+                <div className="max-w-xl mx-auto mt-8 ">
+                    <UserForm user={user} onSave={handleProfileInfoUpdate} />
 
-                    <div className="flex gap-4" >
+                    {/* <div className="flex gap-4" >
                         <div>
                             <div className=" p-2 rounded-lg relative max-w-{120px} ">
                                 <EditableImage link={image} setLink={setImage} />
@@ -178,6 +174,7 @@ export default function ProfilePage() {
 
                     </div>
 
+                    */}
                 </div>
 
             </section>
