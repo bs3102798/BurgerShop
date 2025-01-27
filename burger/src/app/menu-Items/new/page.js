@@ -1,30 +1,21 @@
 'use client'
 import Link from "next/link";
 import { useProfilePage } from "/src/components/UseProfile";
-import EditableImage from "/src/components/layout/EditableImage";
-//import { useProfilePage } from "/src/components/UseProfile";
 import UserTabs from "/src/components/layout/UserTabs";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import RightArrow from "/src/components/icons/Rightarrow.js"
 import LeftArrow from "/src/components/icons/Left.js";
 import { redirect } from "next/navigation";
 import MenuItemForm from "/src/components/layout/MenuItemForm";
-//import { redirect } from "next/dist/server/api-utils";
 export default function NewMenuItemPage() {
 
-    //
+   
     const { loading, data } = useProfilePage();
 
     const [redirectItem, setRedirectItem] = useState(false);
     async function handleFormSubmit(ev,data) {
         ev.preventDefault();
-        // const data = {
-        //     image,
-        //     name,
-        //     description,
-        //     basePrice,
-        // }
+    
         const savingPromise = new Promise(async (resolve, reject) => {
 
             const response = await fetch('/api/menu-items', {

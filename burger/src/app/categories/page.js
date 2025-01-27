@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import UserTabs from "/src/components/layout/UserTabs";
 import { useProfilePage } from "/src/components/UseProfile";
 import toast from "react-hot-toast";
+import DeleteButton from "/src/components/DeleteButton";
 
 
 export default function CategoriesPage() {
@@ -102,9 +103,17 @@ export default function CategoriesPage() {
                                 onChange={ev => setCategoryName(ev.target.value)}
                             />
                         </div>
-                        <div className="pb-2">
+                        <div className="pb-2 flex gap-2">
                             <button className="border border-primary px-8 py-2" type="submit">
                                 {editedCategroy ? 'Update' : 'Create'}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setEditedCategory(null);
+                                    setCategoryName('')
+                                }}>
+                                Cancel
                             </button>
                         </div>
 
@@ -129,11 +138,14 @@ export default function CategoriesPage() {
                                     }}>
                                     Edit
                                 </button>
-                                <button
+                                {/* <button
                                     type="button"
                                     onClick={() => handleDeleteClick(c._id)}>
                                     Delete
-                                </button>
+                                </button> */}
+                                <DeleteButton 
+                                label={'Delete'}
+                                 onDelete={() => handleDeleteClick(c._id)} />
                             </div>
                         </div>
                     ))}
