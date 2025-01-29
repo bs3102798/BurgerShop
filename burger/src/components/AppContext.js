@@ -11,11 +11,11 @@ export function AppProvider({ children }) {
 
 
     useEffect(() => {
-        if(ls && ls.getItem('cart')) {
+        if (ls && ls.getItem('cart')) {
             setCartProducts(JSON.parse(ls.getItem('cart')))
         }
-        
-    },[])
+
+    }, [])
 
     function saveCartProductsToLocalStorage(cartProducts) {
         if (ls) {
@@ -23,7 +23,21 @@ export function AppProvider({ children }) {
         }
     }
 
- 
+    function clearCart() {
+        setCartProducts([])
+        saveCartProductsToLocalStorage([])
+    }
+
+    function removeCartProduct(indexToRemove) {
+        setCartProducts(prevCartProducts => {
+            const newCartProducts = prevCartProducts
+                .filter((v, index) => index !== indexToRemove)
+                saveCartProductsToLocalStorage(newCartProducts);
+            return newCartProducts
+        })
+    }
+
+
 
     function AddToCart(product, size = null, extras = []) {
         setCartProducts(prevProducts => {
@@ -38,6 +52,7 @@ export function AppProvider({ children }) {
         <SessionProvider>
             <CartContext.Provider value={{
                 cartProducts, setCartProducts, AddToCart,
+                removeCartProduct, clearCart,
             }}>
                 {children}
 
