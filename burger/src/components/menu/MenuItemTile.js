@@ -17,17 +17,7 @@ export default function MenuItemTile({ onAddToCart, ...item }) {
                 hasSizesOrExtras={hasSizesOrExtras}
                 onClick={onAddToCart}
                 basePrice={basePrice} />
-            {/* <button
-                    type="button"
-                    onClick={onAddToCart}
-                    className="bg-primary text-white rounded-full px-8 py-2 mt-4">
-                        {(hasSizesOrExtras) ? (
-                            <span>starting from ${basePrice}</span>
-                        ): (
-                            <span>Add to cart ${basePrice}</span>
-                        )}
-                </button> */}
-            {/* Add to cart ${basePrice} */}
+          
         </div>
 
     )

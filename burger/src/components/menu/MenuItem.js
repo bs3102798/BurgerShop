@@ -26,7 +26,9 @@ export default function MenuItem(menuItem) {
         }
         AddToCart(menuItem, selectedSize, selectedExtras)
         setShowPopup(false)
-        toast.success('added to cart')
+        toast.success('added to cart', {
+            position: 'top-right'
+        })
     }
 
     function handleExtraThing(ev, extraTopPrices) {

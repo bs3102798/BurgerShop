@@ -57,9 +57,15 @@ export default function CartPage() {
                         {cartProducts?.length > 0 && cartProducts.map((product, index) => (
                             <>
                                 <div className=" items-center flex mb-2 gap-4 py-2">
-                                    <div className="w-30 h-30">
-                                        <Image width={120} height={100} src={product.image} alt={''} />
+
+                                    <div className="h-24 w-24">
+                                        <Image className="object-cover w-full h-full rounded-xl"
+                                            width={256}
+                                            height={256}
+                                            src={product.image}
+                                            alt={''} />
                                     </div>
+
                                     <div className="grow">
                                         <SectionHeaders subHeader={product.name} />
                                         {product.size && (
