@@ -1,25 +1,45 @@
 'use client'
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SectionHeaders from "/src/components/layout/SectionHeaders";
 import { CartContext } from "/src/components/AppContext";
 import Image from "next/image";
 import Trash from "/src/components/icons/Trash";
 import { cartProductPrice } from "/src/components/AppContext";
 import AddressInfo from "/src/components/layout/AddressInput";
+import { useProfilePage } from "/src/components/UseProfile";
 //import { CartContext } from "../AppContext"
 
 export default function CartPage() {
     const { cartProducts, removeCartProduct } = useContext(CartContext)
 
+
     const [address, setAddres] = useState({})
+    const { data: profileData } = useProfilePage()
+
+    useEffect(() => {
+        if (profileData.city) {
+            const { phone, city, country, streetAddress, postalCode, } = profileData
+            const AddressFromProfile = {
+                phone,
+                city,
+                country,
+                streetAddress,
+                postalCode,
+            }
+            setAddres(AddressFromProfile)
+        }
+
+
+
+    }, [profileData])
 
     let total = 0
     for (const p of cartProducts) {
         total += cartProductPrice(p)
     }
 
-    function handleAddressChange() {
-        
+    function handleAddressChange(propName, value) {
+        setAddres(prevAddress => ({ ...prevAddress, [propName]: value }))
     }
 
     return (
@@ -86,10 +106,10 @@ export default function CartPage() {
                     <div className="bg-gray-200 rounded-lg p-4">
                         <h2>Checkout</h2>
                         <form>
-                            <label>Address</label>
-                            <AddressInfo 
-                            adressProps={address} 
-                            setAddress={handleAddressChange} />
+
+                            <AddressInfo
+                                adressProps={address}
+                                setAddressProp={handleAddressChange} />
                             <button type="submit">Pay ${total}</button>
                         </form>
                     </div>

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import EditableImage from "/src/components/layout/EditableImage";
 import { useProfilePage } from "../UseProfile";
-import DeleteButton from "../DeleteButton";
+//import DeleteButton from "../DeleteButton";
 import AddressInfo from "./AddressInput";
 
 export default function UserForm({ user, onSave }) {
@@ -55,7 +55,7 @@ export default function UserForm({ user, onSave }) {
                     disabled={true}
                     value={user.email} />
                 
-                <AddressInfo adressProps={{ phone, city, country, streetAddress, postalCode,}} 
+                <AddressInfo adressProps={{ phone, city, country, streetAddress, postalCode}} 
                 setAddressProp={handleAddressChange} />
                 {loggedInUserData.admin && (
                     <div>
