@@ -3,6 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "../AppContext";
+import Cart from "../icons/Cart";
 
 export default function Header() {
     const session = useSession()
@@ -11,7 +12,7 @@ export default function Header() {
     const status = session?.status;
     const userData = session.data?.user
     let userName = userData?.name || userData?.email
-    const {cartProducts} = useContext(CartContext)
+    const { cartProducts } = useContext(CartContext)
     if (userName && userName?.includes(' ')) {
         userName = userName.split(' ')[0]
     }
@@ -35,7 +36,7 @@ export default function Header() {
                     {status === "authenticated" && (
                         <>
                             <Link
-                            className="whitespace-nowrap"
+                                className="whitespace-nowrap"
                                 href={'/profile'}>
                                 Hello,{userName}
                             </Link>
@@ -57,9 +58,17 @@ export default function Header() {
 
                         </>
                     )}
+                    <Link href={'/cart'}>
+                        <div className="relative">
 
-                        <Link href={'/cart'}>Cart ({cartProducts.length})</Link>
-                
+                            <Cart />
+                            <span 
+                            className=" absolute -top-2 -right-2 bg-primary p-1 rounded-full text-sm text-white leading-3 ">
+                                {cartProducts.length}
+                            </span>
+                        </div>
+                    </Link>
+
 
 
 

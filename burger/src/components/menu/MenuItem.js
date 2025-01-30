@@ -18,20 +18,17 @@ export default function MenuItem(menuItem) {
     const [showPopup, setShowPopup] = useState(false)
 
     function handleAddToCartButtonClick() {
-        const hasOptions = sizes.length > 0 && extraTopPrices.length > 0
-        if (hasOptions) {
-            setShowPopup(true)
-        } else {
-            if(showPopup) {
-                AddToCart(menuItem, selectedSize, selectedExtras)
-            } else{
-                AddToCart(menuItem);
-            }
-            setShowPopup(false)
-            toast.success('added to cart')
-        }
-    }
+        const hasOptions = sizes.length > 0 || extraTopPrices.length > 0
     
+        if(hasOptions && !showPopup) {
+            setShowPopup(true)
+            return;
+        }
+        AddToCart(menuItem, selectedSize, selectedExtras)
+        setShowPopup(false)
+        toast.success('added to cart')
+    }
+
     function handleExtraThing(ev, extraTopPrices) {
         //console.log(ev)
         const checked = ev.target.checked
@@ -89,7 +86,7 @@ export default function MenuItem(menuItem) {
                             {extraTopPrices?.length > 0 && (
                                 <div className="py-2">
                                     <h3 className="text-center text-gray-700">Extra Topping?</h3>
-                                    {JSON.stringify(selectedExtras)}
+                                    {/* {JSON.stringify(selectedExtras)} */}
                                     {extraTopPrices.map(extraTopPrices => (
                                         <label className="flex items-center gap-3 p-4 border rounded-md mb-1">
                                             <input
