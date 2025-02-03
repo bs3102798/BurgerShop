@@ -7,6 +7,7 @@ import Trash from "/src/components/icons/Trash";
 import { cartProductPrice } from "/src/components/AppContext";
 import AddressInfo from "/src/components/layout/AddressInput";
 import { useProfilePage } from "/src/components/UseProfile";
+import toast from "react-hot-toast";
 //import { CartContext } from "../AppContext"
 
 export default function CartPage() {
@@ -43,18 +44,36 @@ export default function CartPage() {
     }
 
     async function proceedToCheckout(ev) {
-        const response = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type:': 'application/json' },
-            body: JSON.stringify({
-                address,
-                cartProducts,
+        ev.preventDefault();
+        const promise = new Promise((resolve, reject) => {
 
-            }),
-
+            fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                
+                body: JSON.stringify({
+                    address,
+                    cartProducts,
+                    
+                }),
+            }) .then(async(response) => {
+                if (response.ok) {
+                    window.location = await response.json();
+                } else {
+                    reject()
+                }
+            });
+        });
+        toast.promise(promise, {
+            loading:'Preparing your order...',
+            success: 'Redirectiong to payment...',
+            error: 'Somthing went wrong...Please try again'
         })
-        const link = await response.json();
-        window.location = link
+        // const link = 
+        // await response.json();
+        //joyful-fine-galore-agile
+        //STRIPE_SIGN_SECRET = whsec_35a4890f9e8261d7e61d81c15f409fef3bd4e765acd9a7d24aa728863878bca1 (^C to quit)
+
     }
     //console.log({cartProducts})
 
@@ -121,7 +140,7 @@ export default function CartPage() {
                                 Delivery:<br />
                                 Total:
                             </div>
-                            <div className="text-lg font-semibold pl-2 text-right">
+                            <div className=" font-semibold pl-2 text-right">
                                 ${subtotal}<br />
                                 $5<br />
                                 ${subtotal + 5}
