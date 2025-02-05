@@ -38,7 +38,7 @@ export default function OrderPage() {
     }
     return (
         <>
-            <section className="max-w-xl text-center mx-auto mt-8">
+            {/* <section className="max-w-xl text-center mx-auto mt-8">
                 <div className="text-center">
                     <SectionHeaders MainHeader={'Your Order'} />
                     <div className="mt-4">
@@ -83,7 +83,7 @@ export default function OrderPage() {
 
                 )}
 
-            </section>
+            </section> */}
 
         </>
     )

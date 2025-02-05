@@ -36,7 +36,7 @@ export default function OrderPage() {
     }
     return (
         <>
-            <section className="max-w-xl mx-auto mt-8">
+            {/* <section className="max-w-xl mx-auto mt-8">
                 <UserTabs isAdmin={true} />
                 <div className="mt-8">
                     {loadingOrders && (
@@ -74,7 +74,7 @@ export default function OrderPage() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
         </>
     )
 }
