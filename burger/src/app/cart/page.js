@@ -17,6 +17,16 @@ export default function CartPage() {
     const [address, setAddres] = useState({})
     const { data: profileData } = useProfilePage()
 
+
+    useEffect(() => {
+        if(typeof window !== 'undefind') {
+            if(window.location.href.includes('canceled=1')) {
+                toast.error('Payment failed')
+            }
+        }
+
+    },[])
+    
     useEffect(() => {
         if (profileData.city) {
             const { phone, city, country, streetAddress, postalCode, } = profileData
@@ -69,10 +79,7 @@ export default function CartPage() {
             success: 'Redirectiong to payment...',
             error: 'Somthing went wrong...Please try again'
         })
-        // const link = 
-        // await response.json();
-        //joyful-fine-galore-agile
-        //STRIPE_SIGN_SECRET = whsec_35a4890f9e8261d7e61d81c15f409fef3bd4e765acd9a7d24aa728863878bca1 (^C to quit)
+
 
     }
     //console.log({cartProducts})
