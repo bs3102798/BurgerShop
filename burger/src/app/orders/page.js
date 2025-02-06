@@ -1,44 +1,45 @@
-// 'use client'
+'use client'
 // import { useEffect, useState } from "react";
 // import { useProfilePage } from "/src/components/UseProfile";
-// import UserTabs from "/src/components/layout/UserTabs";
+ import UserTabs from "/src/components/layout/UserTabs";
 // import Link from "next/link";
 
-// export default function OrderPage() {
+export default function OrderPage() {
 
-//     const { loading, data } = useProfilePage();
-//     const [orders, setOrders] = useState();
-//     const [loadingOrders, setLoadingOrder] = useState(true)
+    //     const { loading, data } = useProfilePage();
+    //     const [orders, setOrders] = useState();
+    //     const [loadingOrders, setLoadingOrder] = useState(true)
 
-//     useEffect(() => {
-//         fetchOrders();
+    //     useEffect(() => {
+    //         fetchOrders();
 
-//     }, [])
+    //     }, [])
 
-//     function fetchOrders() {
-//         setLoadingOrder(true)
-//         fetch('/api/orders').then(res => {
-//             res.json().then(orders => {
-//                 console.log(orders);
-//                 setOrders(orders.reverse());
-//                 setLoadingOrder(false)
-//             })
+    //     function fetchOrders() {
+    //         setLoadingOrder(true)
+    //         fetch('/api/orders').then(res => {
+    //             res.json().then(orders => {
+    //                 console.log(orders);
+    //                 setOrders(orders.reverse());
+    //                 setLoadingOrder(false)
+    //             })
 
-//         })
+    //         })
 
-//     }
+    //     }
 
-//     if (loading) {
-//         return 'Loading user info...';
-//     }
-//     if (!data.admin) {
-//         return "Not an admin.";
-//     }
-//     return (
-//         <>
-//             {/* <section className="max-w-xl mx-auto mt-8">
-//                 <UserTabs isAdmin={true} />
-//                 <div className="mt-8">
+    //     if (loading) {
+    //         return 'Loading user info...';
+    //     }
+    //     if (!data.admin) {
+    //         return "Not an admin.";
+    //     }
+    return (
+        <>
+            <section className="max-w-xl mx-auto mt-8">         
+                 <UserTabs isAdmin={true} />
+                   {/* 
+                <div className="mt-8">
 //                     {loadingOrders && (
 //                         <div>Loading orders....</div>
 //                     )}
@@ -74,7 +75,9 @@
 //                         </div>
 //                     ))}
 //                 </div>
-//             </section> */}
-//         </>
-//     )
-// }
+// */}
+
+             </section>
+        </>
+    )
+}

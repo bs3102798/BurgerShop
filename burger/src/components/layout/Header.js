@@ -62,10 +62,13 @@ export default function Header() {
                         <div className="relative">
 
                             <Cart />
-                            <span 
-                            className=" absolute -top-2 -right-2 bg-primary p-1 rounded-full text-sm text-white leading-3 ">
+                            {cartProducts?.length > 0 &&(
+
+                                <span 
+                                className=" absolute -top-2 -right-2 bg-primary p-1 rounded-full text-sm text-white leading-3 ">
                                 {cartProducts.length}
                             </span>
+                            )}
                         </div>
                     </Link>
 

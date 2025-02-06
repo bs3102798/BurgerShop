@@ -1,34 +1,34 @@
 // /* eslint-disable react/jsx-key */
-// 'use client'
+'use client'
 
-// import { CartContext, cartProductPrice } from "@/components/AppContext";
- import SectionHeaders from "/src/components/layout/SectionHeaders"
-// import { useContext, useEffect, useState } from "react"
+import { CartContext, cartProductPrice } from "@/components/AppContext";
+import SectionHeaders from "/src/components/layout/SectionHeaders"
+import { useContext, useEffect, useState } from "react"
 // import AddressInfo from "@/components/layout/AddressInput";
 
 
 export default function OrderPage() {
 
-    //     const [order, setOrder] = useState();
-    //     const [loadingOrder, setLoadingOrder] = useState();
-    //     const { id } = useState();
-    //     const { clearCart } = useContext(CartContext)
-    //     useEffect(() => {
-    //         if (typeof window.console !== 'undefined') {
-    //             if (window.location.href.includes('clear-cart-1')) {
-    //                 clearCart()
-    //             }
-    //         }
-    //         if (id) {
-    //             setLoadingOrder(true)
-    //             fetch('/api/orders?_id=' + id).then(res => {
-    //                 res.json().then(orderData => {
-    //                     setOrder(orderData);
-    //                     setLoadingOrder(false);
-    //                 })
-    //             })
-    //         }
-    //     }, [])
+    const [order, setOrder] = useState();
+    const [loadingOrder, setLoadingOrder] = useState();
+    const { id } = useState();
+    const { clearCart } = useContext(CartContext)
+    useEffect(() => {
+        if (typeof window.console !== 'undefined') {
+            if (window.location.href.includes('clear-cart=1')) {
+                clearCart();
+            }
+        }
+        // if (id) {
+        //     setLoadingOrder(true)
+        //     fetch('/api/orders?_id=' + id).then(res => {
+        //         res.json().then(orderData => {
+        //             setOrder(orderData);
+        //             setLoadingOrder(false);
+        //         })
+        //     })
+        // }
+    }, [])
 
     //     let subtotal = 0;
     //     if (order?.cartProducts) {
@@ -39,7 +39,7 @@ export default function OrderPage() {
     return (
         <>
             <section className="max-w-xl text-center mx-auto mt-8">
-                 <div className="text-center">
+                <div className="text-center">
                     <SectionHeaders MainHeader={'Your Order'} />
                     <div className="mt-4">
                         <p>Thanks for your order</p>

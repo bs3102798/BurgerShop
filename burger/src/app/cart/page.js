@@ -19,14 +19,14 @@ export default function CartPage() {
 
 
     useEffect(() => {
-        if(typeof window !== 'undefind') {
-            if(window.location.href.includes('canceled=1')) {
+        if (typeof window !== 'undefind') {
+            if (window.location.href.includes('canceled=1')) {
                 toast.error('Payment failed')
             }
         }
 
-    },[])
-    
+    }, [])
+
     useEffect(() => {
         if (profileData.city) {
             const { phone, city, country, streetAddress, postalCode, } = profileData
@@ -60,13 +60,13 @@ export default function CartPage() {
             fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                
+
                 body: JSON.stringify({
                     address,
                     cartProducts,
-                    
+
                 }),
-            }) .then(async(response) => {
+            }).then(async (response) => {
                 if (response.ok) {
                     window.location = await response.json();
                 } else {
@@ -75,7 +75,7 @@ export default function CartPage() {
             });
         });
         toast.promise(promise, {
-            loading:'Preparing your order...',
+            loading: 'Preparing your order...',
             success: 'Redirectiong to payment...',
             error: 'Somthing went wrong...Please try again'
         })
@@ -84,6 +84,15 @@ export default function CartPage() {
     }
     //console.log({cartProducts})
 
+    if (cartProducts?.length === 0) {
+        return (
+            <section className="mt-8 text-center">
+                <SectionHeaders MainHeader={'Cart'} />
+                <p className="mt-4">your shoping cart is Empty</p>
+
+            </section>
+        )
+    }
     return (
         <>
             <section className="mt-8">

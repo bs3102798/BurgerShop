@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { Order } from "@/app/models/Order";
-import {MenuItem} from "@/app/models/MenuItem";
+import { MenuItem } from "@/app/models/MenuItem";
 //import { metadata } from "@/app/layout";
 const stripe = require('stripe')(process.env.STRIPE_PS)
 
@@ -37,7 +37,7 @@ export async function POST(req) {
         if (cartProduct.extras?.length > 0) {
             for (const cartProductExtraThing of cartProduct.extras) {
                 const extraThingInfo = productInfo.extraTopPrices
-                    .find(extra => extra._id.toString() ===  cartProductExtraThing._id.toString())
+                    .find(extra => extra._id.toString() === cartProductExtraThing._id.toString())
                 productsPrice += extraThingInfo.price
             }
         }
@@ -65,8 +65,8 @@ export async function POST(req) {
         line_items: stripe_line_items,
         mode: 'payment',
         customer_email: userEmail,
-        //success_url: process.env.NEXTAUTH_URL + 'order/' + orderDoc._id.toString() + '?clear-cart-1',
-        success_url: process.env.NEXTAUTH_URL + 'orders/' + orderDoc._id.toString(),
+        success_url: process.env.NEXTAUTH_URL + 'orders/' + orderDoc._id.toString() + '?clear-cart=1',
+        //success_url: process.env.NEXTAUTH_URL + 'orders/' + orderDoc._id.toString(),
         //success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
         cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
         metadata: { orderId: orderDoc._id.toString() },
