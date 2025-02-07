@@ -33,12 +33,12 @@ export default function OrderPage() {
         }
     }, [])
 
-        let subtotal = 0;
-        if (order?.cartProducts) {
-            for (const product of order?.cartProducts) {
-                subtotal += cartProductPrice(product)
-            }
+    let subtotal = 0;
+    if (order?.cartProducts) {
+        for (const product of order?.cartProducts) {
+            subtotal += cartProductPrice(product)
         }
+    }
     return (
         <>
             <section className="max-w-xl text-center mx-auto mt-8">
@@ -54,34 +54,33 @@ export default function OrderPage() {
                 )}
                 {order && (
                     <>
-                        <div className="md:grid grid-cols-2 md:gap-16">
+                        <div className="grid grid-cols-2 gap-16">
                             <div>
                                 {order.cartProducts.map(product => (
                                     <CartProduct key={product._id} product={product} />
 
                                 ))}
+                                <div className="text-right py-2 text-gray-500">
+                                    Subtotal:
+                                    <span className="text-black font-bold inline-block w-8">{subtotal}</span>
+                                    <br />
+                                    Delivery:
+                                    <span className="text-black font-bold inline-block w-8">$5</span>
+                                    <br />
+                                    Total:
+                                    <span className="text-black font-bold inline-block w-8">${subtotal + 5}</span>
+                                    <br />
+                                </div>
                             </div>
-                            <div className="text-right py-2 text-gray-500">
-                                Subtotal:
-                                <span className="text-black font-bold inline-block w-8">{subtotal}</span>
-                                <br />
-                                Delivery:
-                                <span className="text-black font-bold inline-block w-8">$5</span>
-                                <br />
-                                Total:
-                                <span className="text-black font-bold inline-block w-8">${subtotal + 5}</span>
-                                <br />
+                            <div className="bg-gray-100 p-4 rounded-lg text-left">
+                                <AddressInfo disabled={true} adressProps={order} />
+
                             </div>
-                        </div>
-                        <div>
-                            {/* <div className="bg-gray-100 p-4 rounded-lg">
-                                <AddressInfo disabled={true} addressProps={order} />
 
-                            </div> */}
 
                         </div>
+
                     </>
-
                 )}
 
 

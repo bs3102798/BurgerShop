@@ -1,11 +1,22 @@
-export default function AddressInfo({ adressProps, setAddressProp }) {
-    const { phone, streetAddress, postalCode, city, country } = adressProps
+export default function AddressInfo({ adressProps, setAddressProp, disabled = false }) {
+    const { phone, streetAddress, postalCode, city, country, userEmail } = adressProps
     return (
         <>
+            <label>
+                Email
+            </label>
+            <input
+                disabled={disabled}
+                type='text'
+                placeholder="Email"
+                value={userEmail || ''}
+                onChange={ev => setAddressProp('userEmail', ev.target.value)}
+            />
             <label>
                 Phone
             </label>
             <input
+                disabled={disabled}
                 value={phone}
                 onChange={ev => setAddressProp('phone', ev.target.value)}
                 type="tel"
@@ -15,6 +26,7 @@ export default function AddressInfo({ adressProps, setAddressProp }) {
                 street address
             </label>
             <input
+                disabled={disabled}
                 type="text"
                 value={streetAddress}
                 onChange={ev => setAddressProp('streetAddress', ev.target.value)}
@@ -27,7 +39,7 @@ export default function AddressInfo({ adressProps, setAddressProp }) {
 
                     <label>Postal code</label>
                     <input
-
+                        disabled={disabled}
                         type="text"
                         value={postalCode}
                         onChange={ev => setAddressProp('postalCode', ev.target.value)}
@@ -38,7 +50,7 @@ export default function AddressInfo({ adressProps, setAddressProp }) {
                 <div>
                     <label>city</label>
                     <input
-
+                        disabled={disabled}
                         type="text"
                         value={city}
                         onChange={ev => setAddressProp('city', ev.target.value)}
@@ -49,6 +61,7 @@ export default function AddressInfo({ adressProps, setAddressProp }) {
             </div>
             <label>Country</label>
             <input
+                disabled={disabled}
                 type="text"
                 value={country}
                 onChange={ev => setAddressProp('country', ev.target.value)}
