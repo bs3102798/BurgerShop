@@ -44,14 +44,15 @@ export default function MenuItemsPage() {
                 </div>
                 <div>
                     <h2 className="text-sm text-gray-500 mt-8">Edit menu item</h2>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-3 gap-2">
 
                         {menuItems?.length > 0 && menuItems.map(item => (
                             <Link href={'/menu-Items/edit/' + item._id} 
                             className="bg-gray-300 rounded-lg p-4">
-                                <div className="relative ">
-                                    <Image className="rounded-md"
-                                     src={item.image} alt={''} width={100} height={100} />
+                                <div className="relative">
+                                    {/* <Image className="rounded-md"
+                                     src={item.image} alt={''} width={100} height={100} /> */}
+                                                     <img src={item.image} alt="burger" className="h-64 w-48 block mx-auto object-cover block rounded-xl" />
 
                                 </div>
                                 <div className="text-center">

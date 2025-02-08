@@ -2,7 +2,7 @@ export default function AddressInfo({ adressProps, setAddressProp, disabled = fa
     const { phone, streetAddress, postalCode, city, country, userEmail } = adressProps
     return (
         <>
-            <label>
+            {/* <label>
                 Email
             </label>
             <input
@@ -11,7 +11,7 @@ export default function AddressInfo({ adressProps, setAddressProp, disabled = fa
                 placeholder="Email"
                 value={userEmail || ''}
                 onChange={ev => setAddressProp('userEmail', ev.target.value)}
-            />
+            /> */}
             <label>
                 Phone
             </label>
