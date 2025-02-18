@@ -8,13 +8,13 @@ import { useEffect, useState } from "react";
 
 export default function HomeMenu() {
     const [bestSellers, setBestSellers] = useState([])
-    useEffect(()=> {
+    useEffect(() => {
         fetch('/api/menu-items').then(res => {
             res.json().then(menuItems => {
-               const bestSellers =  menuItems.slice(7,10);
+                const bestSellers = menuItems.slice(7, 10);
 
-               //console.log(bestSellers)
-               setBestSellers(bestSellers)
+                //console.log(bestSellers)
+                setBestSellers(bestSellers)
             })
         })
 
@@ -41,15 +41,13 @@ export default function HomeMenu() {
 
                 </div>
                 <div className="grid grid-cols-3 gap-4">
-                    {/* <MenuItem />
-                    <MenuItem />
-                    <MenuItem />
-                    <MenuItem />
-                    <MenuItem />
-                    <MenuItem /> */}
-                    {bestSellers?.length > 0 && bestSellers.map(item => (
-                        <MenuItem {...item} />
-                    ))}
+
+                     {bestSellers?.length > 0 && bestSellers.map((item,index) => (
+                        
+                        <MenuItem key={item.id || index} {...item} />
+                    ))} 
+
+
                 </div>
             </section>
         </>
