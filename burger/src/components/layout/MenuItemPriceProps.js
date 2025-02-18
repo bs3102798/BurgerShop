@@ -49,7 +49,7 @@ export default function MenuItemPriceProps({ name, addLabel, props, setProps }) 
                 <div className={isOpen ? 'block' : 'hidden'}>
                     {props?.length > 0 && props.map((size, index) => (
                         // eslint-disable-next-line react/jsx-key
-                        <div className="flex items-end gap-2">
+                        <div key={size.id || index} className="flex items-end gap-2">
                             <div>
                                 <label>name</label>
                                 <input type="text" placeholder="Size name"
