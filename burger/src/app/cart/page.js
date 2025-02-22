@@ -68,6 +68,7 @@ export default function CartPage() {
                 }),
             }).then(async (response) => {
                 if (response.ok) {
+                    resolve()
                     window.location = await response.json();
                 } else {
                     reject()

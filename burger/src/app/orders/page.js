@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { useProfilePage } from "/src/components/UseProfile";
 import UserTabs from "/src/components/layout/UserTabs";
 import Link from "next/link";
-import { dbTimeForHuman } from "@/components/libs/datetime";
+//import { dbTimeForHuman } from "@/components/libs/datetime";
 
 export default function OrderPage() {
 
     const { loading, data } = useProfilePage();
-    const [orders, setOrders] = useState();
+    const [orders, setOrders] = useState([]);
     const [loadingOrders, setLoadingOrder] = useState(true)
 
     useEffect(() => {
@@ -23,6 +23,7 @@ export default function OrderPage() {
                 console.log(orders);
                 setOrders(orders.reverse());
                 setLoadingOrder(false)
+                
             })
 
         })
@@ -45,14 +46,14 @@ export default function OrderPage() {
                         <div>Loading orders....</div>
                     )}
                     {orders?.length > 0 && orders.map(order => (
+                        //console.log(`Order ID: ${order._id}, Paid Status: ${order.paid}`),
 
 
                         <div key={order._id}
                             className="bg-gray-100 mb-2 p-4 rounded-lg flex flex-col md:flex-row items-center gap-8">
                             <div className="grow flex flex-col md:flex-row items-center gap-6">
                                 <div>
-                                    <div>
-                                    </div>
+                                   
                                     <div className="grow">
 
                                         <div className={(
