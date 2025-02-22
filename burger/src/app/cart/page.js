@@ -106,8 +106,8 @@ export default function CartPage() {
                             <div>No products in your shopping cart</div>
                         )}
                         {cartProducts?.length > 0 && cartProducts.map((product, index) => (
-                            <>
-                                <div className=" items-center flex mb-2 gap-4 py-2">
+                            
+                                <div key={product._id || index} className=" items-center flex mb-2 gap-4 py-2">
 
                                     <div className="h-24 w-24">
                                         <Image className="object-cover w-full h-full rounded-xl"
@@ -148,7 +148,7 @@ export default function CartPage() {
                                         </button>
                                     </div>
                                 </div>
-                            </>
+                            
                         ))}
                         <div className="py-2 pr-16 flex justify-end items-center">
                             <div className=" text-gray-500">
