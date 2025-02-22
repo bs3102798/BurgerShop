@@ -67,7 +67,7 @@ export default function UserForm({ user, onSave }) {
                                 className="mr-2"
                                 value={'1'}
                                 checked={admin}
-                                onClick={ev => setAdmin(ev.target.checked)} />
+                                onChange={ev => setAdmin(ev.target.checked)} />
                             <span>Admin</span>
                         </label>
                     </div>
