@@ -56,11 +56,16 @@ export default function OrderPage() {
                                    
                                     <div className="grow">
 
-                                        <div className={(
-                                            order.paid ? 'bg-green-500 ' : 'bg-red-400 '
-                                        ) + 'p-2 rounded-md text-white w-24 text-center'
-                                        }>
-                                            {order.paid ? 'Paid' : 'Not paid'}
+                                        <div className="p-2 rounded-md text-white w-24 text-center bg-green-500 "
+                                         //className={
+                                        //     (
+                                        //     order.paid ? 'bg-green-500 ' : 'bg-red-400 '
+                                        // ) + 
+                                        //'p-2 rounded-md text-white w-24 text-center'
+                                        //}
+                                        >
+                                            {/* {order.paid ? 'Paid' : 'Not paid'} */}
+                                            Paid
                                         </div>
                                         <div className="flex gap-3 items-center mb-1">
                                             <div className="grow">{order.userEmail}</div>
